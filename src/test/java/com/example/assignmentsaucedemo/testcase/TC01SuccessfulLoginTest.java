@@ -1,11 +1,9 @@
 package com.example.assignmentsaucedemo.testcase;
 
 import com.example.assignmentsaucedemo.common.Functions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import com.example.assignmentsaucedemo.base.Base;
 import static org.junit.jupiter.api.Assertions.*;
-
 
 
 public class TC01SuccessfulLoginTest extends Base {
@@ -16,6 +14,7 @@ public class TC01SuccessfulLoginTest extends Base {
         Functions.login(STANDARD_USER, VALID_PASSWORD);
         String currentUrl = String.valueOf(driver.getCurrentUrl());
         assertTrue(currentUrl.contains("/inventory.html"), "Error: Should redirect to inventory page after successful login");
+        logger.info("Logged in successfully");
     }
 
     @Test
@@ -24,6 +23,7 @@ public class TC01SuccessfulLoginTest extends Base {
         Functions.login(PROBLEM_USER, VALID_PASSWORD);
         String currentUrl = String.valueOf(driver.getCurrentUrl());
         assertTrue(currentUrl.contains("/inventory.html"), "Error: Should redirect to inventory page after successful login");
+        logger.info("Logged in successfully");
     }
 
     @Test
@@ -33,6 +33,7 @@ public class TC01SuccessfulLoginTest extends Base {
         Functions.waitForInventoryList();
         String currentUrl = String.valueOf(driver.getCurrentUrl());
         assertTrue(currentUrl.contains("/inventory.html"), "Error: Should redirect to inventory page after successful login");
+        logger.info("Logged in successfully");
     }
 
     @Test
@@ -41,6 +42,7 @@ public class TC01SuccessfulLoginTest extends Base {
         Functions.login(ERROR_USER, VALID_PASSWORD);
         String currentUrl = String.valueOf(driver.getCurrentUrl());
         assertTrue(currentUrl.contains("/inventory.html"), "Error: Should redirect to inventory page after successful login");
+        logger.info("Logged in successfully");
     }
 
     @Test
@@ -49,6 +51,7 @@ public class TC01SuccessfulLoginTest extends Base {
         Functions.login(VISUAL_USER, VALID_PASSWORD);
         String currentUrl = String.valueOf(driver.getCurrentUrl());
         assertTrue(currentUrl.contains("/inventory.html"), "Error: Should redirect to inventory page after successful login");
+        logger.info("Logged in successfully");
     }
 }
 

@@ -1,7 +1,7 @@
 package com.example.assignmentsaucedemo.base;
 
 
-import com.example.assignmentsaucedemo.common.Functions;
+import com.example.assignmentsaucedemo.common.Utility;
 import com.example.assignmentsaucedemo.common.Pages;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,11 +12,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.logging.Logger;
 
@@ -42,32 +37,12 @@ public class Base extends Pages {
         String ciEnv = System.getenv("CI");
         return "true".equalsIgnoreCase(ciEnv);
     }
+
     @BeforeAll
-    public static void cleanScreenshots(TestInfo testInfo) {
-        try {
-            String className = testInfo.getTestClass()
-                    .map(Class::getSimpleName)
-                    .orElse("UnknownClass");
-            Path screenshotsDir = Paths.get("screenshots", className);
-
-            if (Files.exists(screenshotsDir)) {
-                // delete all files inside the folder
-                Files.walk(screenshotsDir)
-                        .sorted(java.util.Comparator.reverseOrder())
-                        .map(Path::toFile)
-                        .forEach(File::delete);
-                Files.createDirectories(screenshotsDir);
-                logger.info("Screenshots folder ready");
-            }
-
-            // recreate empty folder
-            Files.createDirectories(screenshotsDir);
-            logger.info("Screenshots folder ready");
-
-        } catch (IOException e) {
-            logger.info("Screenshots folder ready: " + e.getMessage());
-        }
+    static void setUp(TestInfo testInfo) {
+        Utility.cleanScreenshots(testInfo);
     }
+
     @BeforeEach
     void setupClass() {
         ChromeOptions options = new ChromeOptions();
@@ -81,22 +56,17 @@ public class Base extends Pages {
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.get(BASE_URL);
+        logger.info("Navigate to browser URL: " + BASE_URL);
     }
 
     @AfterEach
     void tearDown(TestInfo testInfo) {
-        String className = testInfo.getTestClass()
-                .map(Class::getSimpleName)
-                .orElse("UnknownClass");
 
-        String testName = testInfo.getTestMethod()
-                .map(java.lang.reflect.Method::getName)
-                .orElse("UnknownTest");
-
-        Functions.takeScreenshot(className, testName);
+        Utility.takeScreenshot(testInfo);
 
         if (driver != null) {
             driver.quit();
+            logger.info("Browser quit");
         }
     }
 
