@@ -46,7 +46,7 @@ public class TC02WrongCredentialTest extends Base {
     public void invalid_errormessageLoginTest()  {
         logger.info("Validating error message");
         Functions.login(INVALID_USER, INVALID_PASSWORD);
-        String ERROR_WRONG_MESSAGE= "Forced Failure - Epic sadface: Username and password do not match any user in this service";
+        String ERROR_WRONG_MESSAGE= "Epic sadface: Username and password do not match any user in this service";
         boolean error_msg = driver.findElement(LOGIN_ERROR_MSG).getText().equals(ERROR_WRONG_MESSAGE);
         assertTrue(error_msg, "Error: Wrong error message displayed");
         logger.info("Error message is correct");
