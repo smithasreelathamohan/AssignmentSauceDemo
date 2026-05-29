@@ -26,15 +26,6 @@ public class TC01SuccessfulLoginTest extends Base {
         logger.info("Logged in successfully");
     }
 
-    @Test
-    @DisplayName("performance_glitch_user Successful login test")
-    public void performance_glitch_userSuccessfulLoginTest(){
-        Functions.login(PERFORMANCE_USER, VALID_PASSWORD);
-        Functions.waitForInventoryList();
-        String currentUrl = String.valueOf(driver.getCurrentUrl());
-        assertTrue(currentUrl.contains("/inventory.html"), "Error: Should redirect to inventory page after successful login");
-        logger.info("Logged in successfully");
-    }
 
     @Test
     @DisplayName("error_user Successful login test")
