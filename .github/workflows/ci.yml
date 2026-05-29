@@ -23,9 +23,11 @@ jobs:
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - name: Build and test
-        run: mvn -B clean test
-        continue-on-error: true
+      - name: Build
+        run: mvn -B clean compile
+
+      - name: Run tests
+        run: mvn -B test
 
       - name: Test Summary
         uses: test-summary/action@v2
